@@ -22,14 +22,14 @@
       const methodName = path[path.length - 1];
 
       if (target && typeof target[methodName] === "function") {
-        return () => target[methodName]();
+        return (...args) => target[methodName](...args);
       }
     }
 
     return null;
   };
 
-  const call = async (paths) => {
+  const call = (paths, ...args) => {
     const sdk = getSdk();
 
     if (!sdk) {
@@ -42,8 +42,7 @@
       return false;
     }
 
-    await method();
-    return true;
+    return method(...args);
   };
 
   window.LocGusserCrazyGames = {
@@ -53,6 +52,15 @@
     loadingStop: () => call([["game", "loadingStop"], ["loadingStop"]]),
     gameplayStart: () => call([["game", "gameplayStart"], ["gameplayStart"]]),
     gameplayStop: () => call([["game", "gameplayStop"], ["gameplayStop"]]),
-    happytime: () => call([["game", "happytime"], ["happytime"]])
+    happytime: () => call([["game", "happytime"], ["happytime"]]),
+    inviteLink: (params) => call([["game", "inviteLink"], ["inviteLink"]], params),
+    showInviteButton: (params) => call([["game", "showInviteButton"], ["showInviteButton"]], params),
+    hideInviteButton: () => call([["game", "hideInviteButton"], ["hideInviteButton"]]),
+    getInviteParam: (name) => call([["game", "getInviteParam"], ["getInviteParam"]], name),
+    addJoinRoomListener: (listener) => call([["game", "addJoinRoomListener"], ["addJoinRoomListener"]], listener),
+    updateRoom: (options) => call([["game", "updateRoom"], ["updateRoom"]], options),
+    leftRoom: () => call([["game", "leftRoom"], ["leftRoom"]]),
+    isInstantMultiplayer: () => Boolean(getSdk()?.game?.isInstantMultiplayer || getSdk()?.isInstantMultiplayer),
+    isChatDisabled: () => Boolean(getSdk()?.game?.settings?.disableChat || getSdk()?.settings?.disableChat)
   };
 })();

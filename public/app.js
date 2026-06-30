@@ -22,12 +22,15 @@ let toastTimer = null;
 let viewerLoadGeneration = 0;
 let crazyGameplayActive = false;
 let lastHappyRoundKey = "";
+let crazyJoinListenerRegistered = false;
+let crazyRoomKey = "";
 
 boot();
 setInterval(tickClock, 500);
 
 async function boot() {
   await callCrazyGames("init");
+  registerCrazyGamesJoinListener();
   callCrazyGames("loadingStart");
 
   try {
@@ -67,6 +70,7 @@ function render() {
 
   setupTokenForms();
   syncCrazyGamesState();
+  syncCrazyGamesRoom();
 }
 
 function renderConnect() {
@@ -1265,6 +1269,7 @@ async function leaveRoom() {
   session = null;
   state = null;
   saveSession();
+  resetCrazyGamesRoom();
   render();
 }
 
@@ -1360,8 +1365,11 @@ function saveSession() {
   localStorage.setItem(SESSION_KEY, JSON.stringify(session));
 }
 
-function copyRoomCode() {
-  const inviteUrl = getInviteUrl();
+async function copyRoomCode() {
+  const inviteParams = getCrazyInviteParams();
+  const inviteUrl = state?.code
+    ? await callCrazyGames("inviteLink", inviteParams) || getInviteUrl()
+    : getInviteUrl();
 
   if (!navigator.clipboard) {
     showToast(state.code);
@@ -1379,11 +1387,35 @@ function getInviteUrl() {
 
 function getInviteRoomCode() {
   try {
-    const roomCode = new URLSearchParams(window.location.search).get("room");
+    const roomCode = getCrazyGamesInviteParam("room") || new URLSearchParams(window.location.search).get("room");
     return String(roomCode || "").trim().toUpperCase().slice(0, 8);
   } catch (error) {
     return "";
   }
+}
+
+function registerCrazyGamesJoinListener() {
+  if (crazyJoinListenerRegistered) {
+    return;
+  }
+
+  crazyJoinListenerRegistered = true;
+  callCrazyGames("addJoinRoomListener", (params = {}) => {
+    const roomCode = String(params.room || params.roomCode || "").trim().toUpperCase().slice(0, 8);
+
+    if (!roomCode) {
+      return;
+    }
+
+    const url = new URL(window.location.href);
+    url.searchParams.set("room", roomCode);
+    window.history.replaceState(null, "", url.toString());
+
+    if (!session) {
+      render();
+      showToast(`Invite ready for room ${roomCode}.`);
+    }
+  });
 }
 
 function syncCrazyGamesState() {
@@ -1404,6 +1436,67 @@ function syncCrazyGamesState() {
     lastHappyRoundKey = happyRoundKey;
     callCrazyGames("happytime");
   }
+}
+
+function syncCrazyGamesRoom() {
+  if (!state?.code || !session?.roomCode) {
+    if (crazyRoomKey) {
+      resetCrazyGamesRoom();
+    }
+    return;
+  }
+
+  const roomKey = state.code;
+
+  if (crazyRoomKey === roomKey) {
+    return;
+  }
+
+  crazyRoomKey = roomKey;
+
+  const inviteParams = getCrazyInviteParams();
+
+  callCrazyGames("updateRoom", {
+    roomId: state.code,
+    isJoinable: true,
+    inviteParams
+  });
+  callCrazyGames("inviteLink", inviteParams);
+  callCrazyGames("showInviteButton", inviteParams);
+}
+
+function resetCrazyGamesRoom() {
+  if (!crazyRoomKey) {
+    return;
+  }
+
+  crazyRoomKey = "";
+  callCrazyGames("hideInviteButton");
+  callCrazyGames("leftRoom");
+}
+
+function getCrazyInviteParams() {
+  return { room: state?.code || session?.roomCode || getInviteRoomCode() };
+}
+
+function getCrazyGamesInviteParam(name) {
+  const sdk = window.LocGusserCrazyGames;
+
+  if (!sdk || typeof sdk.getInviteParam !== "function") {
+    return "";
+  }
+
+  try {
+    const value = sdk.getInviteParam(name);
+
+    if (typeof value === "string") {
+      return value;
+    }
+  } catch (error) {
+    return "";
+  }
+
+  return "";
 }
 
 function callCrazyGames(method) {
