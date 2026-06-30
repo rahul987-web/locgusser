@@ -1,0 +1,23 @@
+{
+  "name": "locgusser",
+  "version": "1.0.0",
+  "description": "A free friend-room street-view guessing game.",
+  "main": "server.js",
+  "scripts": {
+    "build:crazygames": "node scripts/build-crazygames.js",
+    "check": "node --check server.js && node --check public/app.js && node --check public/crazygames.js && node --check scripts/build-crazygames.js",
+    "dev": "node server.js",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "game",
+    "maps",
+    "multiplayer",
+    "geography"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  }
+}

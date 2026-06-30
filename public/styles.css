@@ -1,0 +1,814 @@
+:root {
+  color-scheme: dark;
+  --bg: #101412;
+  --panel: #181f1b;
+  --panel-2: #202923;
+  --line: #334039;
+  --text: #f3f6ef;
+  --muted: #abb7aa;
+  --green: #58d68d;
+  --yellow: #ffd166;
+  --red: #ff6b6b;
+  --blue: #66a6ff;
+  --shadow: 0 18px 50px rgba(0, 0, 0, 0.32);
+  --radius: 8px;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  background:
+    linear-gradient(rgba(16, 20, 18, 0.7), rgba(16, 20, 18, 0.95)),
+    url("https://commons.wikimedia.org/wiki/Special:FilePath/Western%20Ghats%20India.jpg?width=1800") center / cover fixed,
+    var(--bg);
+  color: var(--text);
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  border: 0;
+}
+
+.app-shell {
+  min-height: 100vh;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 68px;
+  padding: 14px clamp(16px, 4vw, 34px);
+  background: rgba(16, 20, 18, 0.86);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+  backdrop-filter: blur(18px);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.brand-mark {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  color: #0d1611;
+  background: var(--green);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  flex: 0 0 auto;
+}
+
+.brand-title {
+  margin: 0;
+  font-size: 1.08rem;
+  letter-spacing: 0;
+}
+
+.brand-subtitle {
+  margin: 2px 0 0;
+  color: var(--muted);
+  font-size: 0.83rem;
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.container {
+  width: min(1180px, calc(100% - 28px));
+  margin: 0 auto;
+}
+
+.join-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+  gap: 22px;
+  align-items: stretch;
+  padding: clamp(18px, 4vw, 38px) 0;
+  min-height: calc(100vh - 68px);
+}
+
+.preview-stage,
+.panel,
+.game-panel,
+.map-panel,
+.viewer-panel,
+.leaderboard-panel {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(24, 31, 27, 0.93);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.preview-stage {
+  position: relative;
+  min-height: 560px;
+  overflow: hidden;
+  background: #182019;
+}
+
+.preview-stage::before {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background:
+    linear-gradient(180deg, rgba(16, 20, 18, 0.1), rgba(16, 20, 18, 0.8)),
+    url("https://commons.wikimedia.org/wiki/Special:FilePath/India%20Gate%20New%20Delhi.jpg?width=1800") center / cover;
+  transform: scale(1.02);
+}
+
+.preview-content {
+  position: absolute;
+  inset: auto 22px 22px;
+  display: grid;
+  gap: 14px;
+}
+
+.preview-title {
+  width: min(580px, 100%);
+  margin: 0;
+  font-size: clamp(2.2rem, 6vw, 5.3rem);
+  line-height: 0.94;
+  letter-spacing: 0;
+}
+
+.preview-meta {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 32px;
+  padding: 6px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  background: rgba(16, 20, 18, 0.74);
+  color: var(--text);
+  font-size: 0.86rem;
+  white-space: nowrap;
+}
+
+.panel {
+  padding: 22px;
+}
+
+.stack {
+  display: grid;
+  gap: 18px;
+}
+
+.tight-stack {
+  display: grid;
+  gap: 10px;
+}
+
+.form-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.field {
+  display: grid;
+  gap: 7px;
+}
+
+.field label {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.input-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+}
+
+input,
+select {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  color: var(--text);
+  background: #0f1512;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  outline: none;
+}
+
+input:focus,
+select:focus {
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px rgba(88, 214, 141, 0.16);
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 10px 14px;
+  color: #09110d;
+  background: var(--green);
+  border-radius: var(--radius);
+  font-weight: 750;
+  cursor: pointer;
+  transition: transform 150ms ease, background 150ms ease, opacity 150ms ease;
+  white-space: nowrap;
+}
+
+.button:hover {
+  transform: translateY(-1px);
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.54;
+  transform: none;
+}
+
+.button.secondary {
+  color: var(--text);
+  background: #253129;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.button.warn {
+  color: #221508;
+  background: var(--yellow);
+}
+
+.button.ghost {
+  color: var(--muted);
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.11);
+}
+
+.icon-button {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0;
+  font-size: 1.05rem;
+  letter-spacing: 0;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.small {
+  font-size: 0.86rem;
+}
+
+.room-code {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 44px;
+  padding: 9px 12px;
+  color: var(--yellow);
+  background: #171b11;
+  border: 1px solid rgba(255, 209, 102, 0.28);
+  border-radius: var(--radius);
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.player-list,
+.score-list {
+  display: grid;
+  gap: 8px;
+}
+
+.player-row,
+.score-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius);
+}
+
+.player-name,
+.score-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.status-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #6f7d71;
+}
+
+.status-dot.on {
+  background: var(--green);
+}
+
+.host-badge {
+  color: var(--yellow);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.game-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 12px;
+  min-height: calc(100vh - 68px);
+  padding: 10px;
+}
+
+.game-main {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 10px;
+  min-width: 0;
+}
+
+.round-strip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.stat {
+  min-height: 72px;
+  padding: 12px;
+  background: rgba(24, 31, 27, 0.93);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius);
+}
+
+.stat-label {
+  margin: 0 0 5px;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.stat-value {
+  margin: 0;
+  font-size: clamp(1.05rem, 2vw, 1.5rem);
+  font-weight: 850;
+  letter-spacing: 0;
+}
+
+.play-surface {
+  position: relative;
+  display: block;
+  height: calc(100vh - 164px);
+  min-height: 620px;
+}
+
+.viewer-panel,
+.map-panel,
+.leaderboard-panel {
+  overflow: hidden;
+}
+
+.viewer-panel,
+.map-panel {
+  position: relative;
+  min-height: 0;
+}
+
+.viewer-panel {
+  height: 100%;
+  background: #0b0f0d;
+}
+
+.map-panel {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  z-index: 12;
+  width: min(430px, 42vw);
+  height: 310px;
+  background: rgba(17, 22, 19, 0.94);
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 22px 70px rgba(0, 0, 0, 0.48);
+  transition: width 180ms ease, height 180ms ease, transform 180ms ease;
+}
+
+.map-panel:hover,
+.map-panel.revealed {
+  width: min(620px, 52vw);
+  height: min(460px, 56vh);
+}
+
+.viewer-media,
+#google-street-viewer,
+#pano-viewer,
+#guess-map {
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+}
+
+#pano-viewer .pnlm-container {
+  background: #0b0f0d;
+}
+
+.viewer-media {
+  display: block;
+  object-fit: cover;
+  background: #151b18;
+}
+
+.viewer-fallback {
+  display: grid;
+  place-items: center;
+  min-height: 100%;
+  padding: 24px;
+  background:
+    linear-gradient(130deg, rgba(88, 214, 141, 0.2), rgba(102, 166, 255, 0.16)),
+    #151b18;
+  text-align: center;
+}
+
+.viewer-loading {
+  position: absolute;
+  inset: 0;
+  z-index: 7;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 10px;
+  color: var(--text);
+  background:
+    radial-gradient(circle at 50% 42%, rgba(88, 214, 141, 0.18), transparent 28%),
+    rgba(8, 12, 10, 0.88);
+  transition: opacity 180ms ease;
+}
+
+.viewer-loading svg {
+  width: 34px;
+  height: 34px;
+  color: var(--green);
+  animation: spin 900ms linear infinite;
+}
+
+.viewer-loading.hide {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.viewer-fallback h2,
+.viewer-fallback p {
+  margin: 0;
+}
+
+.fallback-icon {
+  width: 38px;
+  height: 38px;
+  margin: 0 auto 4px;
+  color: var(--green);
+}
+
+.viewer-caption,
+.map-actions {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  z-index: 8;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.viewer-caption {
+  top: 12px;
+  padding: 10px 12px;
+  background: rgba(12, 16, 14, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius);
+  backdrop-filter: blur(10px);
+}
+
+.street-controls {
+  position: absolute;
+  inset: 0;
+  z-index: 9;
+  pointer-events: none;
+}
+
+.street-move {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: clamp(78px, 7vw, 112px);
+  height: clamp(54px, 5vw, 78px);
+  color: var(--text);
+  background:
+    radial-gradient(ellipse at 50% 50%, rgba(88, 214, 141, 0.38), rgba(88, 214, 141, 0.14) 56%, rgba(12, 16, 14, 0.1) 72%, transparent 73%);
+  border: 0;
+  border-radius: 999px;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.38);
+  cursor: pointer;
+  pointer-events: auto;
+  transition: opacity 150ms ease, filter 150ms ease, transform 150ms ease;
+  transform: translate(-50%, 0) perspective(180px) rotateX(54deg);
+  transform-origin: 50% 100%;
+}
+
+.street-move:hover {
+  filter: brightness(1.14);
+  transform: translate(-50%, -3px) perspective(180px) rotateX(54deg);
+}
+
+.street-move:disabled {
+  opacity: 0;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.street-move.loading:disabled {
+  opacity: 0.85;
+  transform: translate(-50%, 0) perspective(180px) rotateX(54deg);
+}
+
+.street-move svg {
+  width: clamp(32px, 3.2vw, 48px);
+  height: clamp(32px, 3.2vw, 48px);
+  color: #f7fff8;
+  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.55));
+  transform: perspective(180px) rotateX(-54deg);
+}
+
+.road-forward {
+  left: 50%;
+  bottom: clamp(112px, 19vh, 190px);
+}
+
+.road-back {
+  left: calc(50% - clamp(78px, 9vw, 135px));
+  bottom: clamp(70px, 12vh, 128px);
+  width: clamp(62px, 5.5vw, 88px);
+  height: clamp(44px, 4vw, 62px);
+  opacity: 0.82;
+}
+
+.road-back:hover {
+  opacity: 1;
+}
+
+.street-move.loading svg {
+  animation: spin 900ms linear infinite;
+}
+
+.viewer-caption span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.map-actions {
+  bottom: 12px;
+  pointer-events: none;
+}
+
+.map-actions > * {
+  pointer-events: auto;
+}
+
+.map-status {
+  max-width: 240px;
+  padding: 10px 12px;
+  color: var(--text);
+  background: rgba(12, 16, 14, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius);
+  backdrop-filter: blur(10px);
+}
+
+.map-panel .leaflet-control-attribution {
+  font-size: 10px;
+}
+
+.leaflet-container {
+  background: #141a17;
+  color: #1b1b1b;
+}
+
+.leaderboard-panel {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+  padding: 14px;
+  min-width: 0;
+}
+
+.guess-table {
+  display: grid;
+  gap: 8px;
+}
+
+.result-banner {
+  display: grid;
+  gap: 4px;
+  padding: 12px;
+  border: 1px solid rgba(88, 214, 141, 0.25);
+  background: rgba(88, 214, 141, 0.11);
+  border-radius: var(--radius);
+}
+
+.result-banner.warning {
+  border-color: rgba(255, 209, 102, 0.3);
+  background: rgba(255, 209, 102, 0.1);
+}
+
+.google-maps-key-form,
+.mapillary-token-form {
+  margin-top: 8px;
+}
+
+.setup-forms {
+  display: grid;
+  gap: 8px;
+}
+
+.google-maps-key-form.compact,
+.mapillary-token-form.compact {
+  width: min(520px, 100%);
+  margin: 12px auto 0;
+}
+
+.result-place {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 850;
+}
+
+.toast {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 50;
+  max-width: min(420px, calc(100vw - 32px));
+  padding: 12px 14px;
+  color: var(--text);
+  background: rgba(12, 16, 14, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.empty {
+  display: grid;
+  place-items: center;
+  min-height: 180px;
+  padding: 18px;
+  color: var(--muted);
+  text-align: center;
+  border: 1px dashed rgba(255, 255, 255, 0.16);
+  border-radius: var(--radius);
+}
+
+@media (max-width: 1060px) {
+  .game-layout,
+  .join-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .game-main {
+    grid-template-rows: auto auto;
+  }
+
+  .play-surface {
+    display: grid;
+    gap: 12px;
+    height: auto;
+    min-height: 0;
+  }
+
+  .map-panel,
+  .map-panel:hover,
+  .map-panel.revealed {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    width: 100%;
+    height: 380px;
+  }
+
+  .viewer-panel {
+    height: 540px;
+  }
+
+  .leaderboard-panel {
+    order: -1;
+  }
+}
+
+@media (max-width: 720px) {
+  .topbar {
+    align-items: flex-start;
+  }
+
+  .brand-subtitle {
+    display: none;
+  }
+
+  .round-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .preview-stage {
+    min-height: 460px;
+  }
+
+  .panel {
+    padding: 16px;
+  }
+
+  .input-row,
+  .map-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .viewer-panel,
+  .map-panel,
+  .viewer-media,
+  #google-street-viewer,
+  #pano-viewer,
+  #guess-map,
+  .viewer-fallback {
+    min-height: 360px;
+  }
+
+  .viewer-panel,
+  .map-panel,
+  .map-panel:hover,
+  .map-panel.revealed {
+    height: 360px;
+  }
+}
