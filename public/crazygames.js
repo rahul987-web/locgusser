@@ -1,5 +1,11 @@
 (() => {
+  const isEnabled = () => Boolean(window.LOCGUSSER_CRAZYGAMES);
+
   const getSdk = () => {
+    if (!isEnabled()) {
+      return null;
+    }
+
     if (window.CrazyGames?.SDK) {
       return window.CrazyGames.SDK;
     }
@@ -46,7 +52,7 @@
   };
 
   window.LocGusserCrazyGames = {
-    enabled: () => Boolean(getSdk()),
+    enabled: () => isEnabled() && Boolean(getSdk()),
     init: () => call([["init"]]),
     loadingStart: () => call([["game", "loadingStart"], ["loadingStart"]]),
     loadingStop: () => call([["game", "loadingStop"], ["loadingStop"]]),

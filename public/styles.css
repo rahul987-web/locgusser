@@ -26,9 +26,10 @@ body {
 }
 
 body {
+  /* Commons photos: AnaimudiPeak_DSC_4834 by Mdmadhu, India_Gate_from_Rajpath by Benison. */
   background:
     linear-gradient(rgba(16, 20, 18, 0.7), rgba(16, 20, 18, 0.95)),
-    url("https://commons.wikimedia.org/wiki/Special:FilePath/Western%20Ghats%20India.jpg?width=1800") center / cover fixed,
+    url("https://upload.wikimedia.org/wikipedia/commons/c/c1/AnaimudiPeak_DSC_4834.jpg") center / cover fixed,
     var(--bg);
   color: var(--text);
 }
@@ -140,7 +141,7 @@ button {
   content: "";
   background:
     linear-gradient(180deg, rgba(16, 20, 18, 0.1), rgba(16, 20, 18, 0.8)),
-    url("https://commons.wikimedia.org/wiki/Special:FilePath/India%20Gate%20New%20Delhi.jpg?width=1800") center / cover;
+    url("https://upload.wikimedia.org/wikipedia/commons/1/17/India_Gate_from_Rajpath.jpg") center / cover;
   transform: scale(1.02);
 }
 

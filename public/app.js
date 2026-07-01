@@ -1499,14 +1499,18 @@ function getCrazyGamesInviteParam(name) {
   return "";
 }
 
-function callCrazyGames(method) {
+function callCrazyGames(method, ...args) {
   const sdk = window.LocGusserCrazyGames;
 
   if (!sdk || typeof sdk[method] !== "function") {
     return Promise.resolve(false);
   }
 
-  return Promise.resolve(sdk[method]()).catch(() => false);
+  try {
+    return Promise.resolve(sdk[method](...args)).catch(() => false);
+  } catch (error) {
+    return Promise.resolve(false);
+  }
 }
 
 function hostName() {
